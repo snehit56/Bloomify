@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloomify | Login</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+    background:#f4fff4;
+}
+.login-box{
+    max-width:450px;
+    margin:60px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+</style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-success">
+<div class="container">
+<a class="navbar-brand fw-bold" href="index.html">🌿 Bloomify</a>
+</div>
+</nav>
+
+<div class="login-box">
+
+<h2 class="text-center text-success mb-4">👤 Customer Login</h2>
+
+<input type="email" id="loginEmail" class="form-control mb-3" placeholder="Email">
+
+<input type="password" id="loginPassword" class="form-control mb-3" placeholder="Password">
+
+<button class="btn btn-success w-100 mb-4" onclick="login()">
+Login
+</button>
+
+<hr>
+
+<h4 class="text-center text-success mb-3">New Customer</h4>
+
+<input type="text" id="regName" class="form-control mb-3" placeholder="Full Name">
+
+<input type="email" id="regEmail" class="form-control mb-3" placeholder="Email">
+
+<input type="password" id="regPassword" class="form-control mb-3" placeholder="Password">
+
+<button class="btn btn-primary w-100" onclick="register()">
+Register
+</button>
+
+</div>
+
+<script>
+
+function register(){
+
+let user={
+name:document.getElementById("regName").value,
+email:document.getElementById("regEmail").value,
+password:document.getElementById("regPassword").value
+};
+
+if(user.name==""||user.email==""||user.password==""){
+alert("Please fill all fields");
+return;
+}
+
+localStorage.setItem("user",JSON.stringify(user));
+
+alert("Registration Successful");
+
+}
+
+function login(){
+
+let user=JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+alert("Please Register First");
+return;
+}
+
+let email=document.getElementById("loginEmail").value;
+let password=document.getElementById("loginPassword").value;
+
+if(email===user.email && password===user.password){
+
+alert("Login Successful");
+
+window.location.href="index.html";
+
+}else{
+
+alert("Invalid Email or Password");
+
+}
+
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

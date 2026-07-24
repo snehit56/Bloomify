@@ -1,0 +1,839 @@
+/* ==========================
+   BLOOMIFY PREMIUM CSS
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f7fff8;
+    color:#333;
+}
+
+/* Navbar */
+
+.navbar{
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.navbar-brand{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.nav-link{
+    font-size:17px;
+    margin-left:10px;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#ffe082 !important;
+}
+
+/* Hero */
+
+.hero{
+
+    background:linear-gradient(rgba(0,0,0,.45),
+    rgba(0,0,0,.45)),
+    url("image/hero.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    color:#fff;
+
+}
+
+.hero h1{
+
+    font-size:60px;
+    font-weight:bold;
+
+}
+
+.hero p{
+
+    font-size:22px;
+
+}
+
+.hero .btn{
+
+    padding:12px 30px;
+    border-radius:40px;
+
+}
+
+.hero-img{
+
+    animation:float 3s infinite ease-in-out;
+
+}
+
+/* Floating Animation */
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+/* Cards */
+
+.card{
+
+border:none;
+border-radius:20px;
+overflow:hidden;
+transition:.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+}
+
+.card img{
+
+height:250px;
+object-fit:cover;
+
+}
+
+.card-body{
+
+padding:25px;
+
+}
+
+.card h5{
+
+font-weight:bold;
+
+}
+
+.card .btn{
+
+border-radius:30px;
+
+}
+
+/* Section */
+
+section{
+
+padding-top:70px;
+padding-bottom:70px;
+
+}
+
+section h2{
+
+font-weight:bold;
+
+margin-bottom:20px;
+
+}
+/* ==========================
+   FEATURED PRODUCTS
+========================== */
+
+.product{
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-10px);
+}
+
+.product img{
+    height:250px;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.product:hover img{
+    transform:scale(1.05);
+}
+
+/* Buttons */
+
+.btn-success{
+    background:#198754;
+    border:none;
+    transition:.3s;
+}
+
+.btn-success:hover{
+    background:#146c43;
+    transform:scale(1.05);
+}
+
+.btn-outline-success:hover{
+    transform:scale(1.05);
+}
+
+.btn-outline-danger:hover{
+    transform:scale(1.05);
+}
+
+/* Search Box */
+
+#searchInput{
+    border-radius:40px;
+    padding:15px 20px;
+    font-size:18px;
+    border:2px solid #198754;
+}
+
+#searchInput:focus{
+    box-shadow:none;
+    border-color:#14532d;
+}
+
+/* Category Cards */
+
+.category-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    transition:.4s;
+}
+
+.category-card:hover{
+    background:#198754;
+    color:#fff;
+    transform:translateY(-8px);
+}
+
+.category-card i{
+    font-size:50px;
+    margin-bottom:15px;
+    color:#198754;
+}
+
+.category-card:hover i{
+    color:#fff;
+}
+
+/* Why Choose Us */
+
+.why-box{
+    padding:25px;
+    border-radius:20px;
+    transition:.3s;
+}
+
+.why-box:hover{
+    background:rgba(255,255,255,.12);
+}
+
+.why-box i{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+/* Counter */
+
+.counter{
+    text-align:center;
+    padding:25px;
+}
+
+.counter h1{
+    color:#198754;
+    font-size:50px;
+    font-weight:bold;
+}
+
+.counter p{
+    font-size:18px;
+}
+
+/* Reviews */
+
+.review-card{
+    border-radius:20px;
+    transition:.3s;
+}
+
+.review-card:hover{
+    transform:translateY(-8px);
+}
+
+.review-card img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+/* Newsletter */
+
+.newsletter{
+    background:#198754;
+    color:#fff;
+    padding:60px 20px;
+    border-radius:20px;
+}
+
+.newsletter input{
+    border-radius:40px;
+    padding:15px;
+}
+
+.newsletter button{
+    border-radius:40px;
+    padding:15px 30px;
+}
+
+/* Google Map */
+
+iframe{
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+    background:#1b1b1b;
+    color:#fff;
+}
+
+footer h3,
+footer h4,
+footer h5{
+    color:#28a745;
+    font-weight:bold;
+}
+
+footer p{
+    color:#ddd;
+    line-height:1.8;
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+    transition:.3s;
+}
+
+footer a:hover{
+    color:#28a745;
+    padding-left:5px;
+}
+
+footer hr{
+    border-color:rgba(255,255,255,.2);
+}
+
+/* ==========================
+   SOCIAL ICONS
+========================== */
+
+.social-icon{
+    width:45px;
+    height:45px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#198754;
+    color:#fff;
+    margin:5px;
+    transition:.3s;
+}
+
+.social-icon:hover{
+    background:#14532d;
+    transform:translateY(-5px) rotate(360deg);
+}
+
+/* ==========================
+   WHATSAPP BUTTON
+========================== */
+
+.whatsapp-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:#25D366;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    text-decoration:none;
+    box-shadow:0 10px 20px rgba(0,0,0,.25);
+    z-index:999;
+    transition:.3s;
+}
+
+.whatsapp-btn:hover{
+    transform:scale(1.12);
+    color:#fff;
+}
+
+/* ==========================
+   SCROLL TO TOP
+========================== */
+
+.scroll-top{
+    position:fixed;
+    bottom:100px;
+    right:25px;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#198754;
+    color:#fff;
+    border:none;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 10px 20px rgba(0,0,0,.2);
+    transition:.3s;
+    z-index:999;
+}
+
+.scroll-top:hover{
+    background:#146c43;
+    transform:translateY(-5px);
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+.fade-up{
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+
+0%{
+opacity:0;
+transform:translateY(40px);
+}
+
+100%{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.zoom-in{
+    animation:zoomIn .6s ease;
+}
+
+@keyframes zoomIn{
+
+0%{
+transform:scale(.8);
+opacity:0;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* ==========================
+   IMAGE HOVER
+========================== */
+
+img{
+    max-width:100%;
+}
+
+.card img:hover{
+    filter:brightness(105%);
+}
+
+/* ==========================
+   SECTION TITLE
+========================== */
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title h2{
+    color:#198754;
+    font-size:38px;
+    font-weight:bold;
+}
+
+.section-title p{
+    color:#666;
+    font-size:18px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:991px){
+
+.hero{
+    text-align:center;
+    min-height:70vh;
+}
+
+.hero h1{
+    font-size:42px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+.hero img{
+    margin-top:30px;
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar-brand{
+    font-size:24px;
+}
+
+section{
+    padding:50px 0;
+}
+
+.section-title h2{
+    font-size:30px;
+}
+
+.card img{
+    height:220px;
+}
+
+footer{
+    text-align:center;
+}
+
+.whatsapp-btn{
+    width:55px;
+    height:55px;
+    font-size:26px;
+}
+
+.scroll-top{
+    width:50px;
+    height:50px;
+}
+
+}
+
+@media(max-width:576px){
+
+.hero h1{
+    font-size:34px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+.btn{
+    width:100%;
+    margin-bottom:10px;
+}
+
+.card img{
+    height:200px;
+}
+
+}
+/* ==========================
+   CART PAGE
+========================== */
+
+.table{
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.table th{
+    background:#198754;
+    color:#fff;
+    text-align:center;
+}
+
+.table td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+.qty-btn{
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:50%;
+    background:#198754;
+    color:#fff;
+    font-weight:bold;
+}
+
+.qty-btn:hover{
+    background:#146c43;
+}
+
+.total-box{
+    background:#fff;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.1);
+}
+
+/* ==========================
+   WISHLIST
+========================== */
+
+.wishlist-card{
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.wishlist-card:hover{
+    transform:translateY(-8px);
+}
+
+.wishlist-card img{
+    height:220px;
+    object-fit:cover;
+}
+
+/* ==========================
+   PAYMENT PAGE
+========================== */
+
+.payment-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.payment-card input,
+.payment-card textarea,
+.payment-card select{
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+.payment-card img{
+    border-radius:15px;
+}
+
+/* ==========================
+   LOGIN & REGISTER
+========================== */
+
+.login-box{
+    max-width:450px;
+    margin:60px auto;
+    background:#fff;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+.login-box h2{
+    color:#198754;
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.login-box input{
+    margin-bottom:15px;
+}
+
+/* ==========================
+   PROFILE PAGE
+========================== */
+
+.profile-card{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.1);
+}
+
+.profile-img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+/* ==========================
+   ADMIN DASHBOARD
+========================== */
+
+.admin-card{
+    border-radius:20px;
+    text-align:center;
+    padding:30px;
+    color:#fff;
+}
+
+.admin-green{
+    background:#198754;
+}
+
+.admin-blue{
+    background:#0d6efd;
+}
+
+.admin-orange{
+    background:#fd7e14;
+}
+
+.admin-red{
+    background:#dc3545;
+}
+
+.admin-card h2{
+    font-size:42px;
+    font-weight:bold;
+}
+
+/* ==========================
+   FORM ELEMENTS
+========================== */
+
+.form-control:focus{
+    border-color:#198754;
+    box-shadow:0 0 10px rgba(25,135,84,.2);
+}
+
+.form-select:focus{
+    border-color:#198754;
+    box-shadow:0 0 10px rgba(25,135,84,.2);
+}
+
+/* ==========================
+   BADGES
+========================== */
+
+.badge-cart{
+    background:red;
+    color:#fff;
+    border-radius:50%;
+    padding:4px 8px;
+    font-size:12px;
+}
+
+/* ==========================
+   LOADER
+========================== */
+
+.loader{
+    width:60px;
+    height:60px;
+    border:6px solid #ddd;
+    border-top:6px solid #198754;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+/* ==========================
+   DARK MODE
+========================== */
+
+.dark-mode{
+    background:#121212;
+    color:#fff;
+}
+
+.dark-mode .card,
+.dark-mode .payment-card,
+.dark-mode .login-box,
+.dark-mode .profile-card,
+.dark-mode .table,
+.dark-mode .total-box{
+    background:#1f1f1f;
+    color:#fff;
+}
+
+.dark-mode footer{
+    background:#000;
+}
+
+/* ==========================
+   UTILITIES
+========================== */
+
+.rounded-20{
+    border-radius:20px;
+}
+
+.shadow-lg-custom{
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.text-green{
+    color:#198754;
+}
+
+.bg-light-green{
+    background:#f2fff5;
+}
