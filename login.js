@@ -36,6 +36,6 @@ window.login = async function () {
 
     alert("✅ Login Successful");
 
-    window.location.href = "admin.html";
+   window.location.href = "index.html";
 
 };
