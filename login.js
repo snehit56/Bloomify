@@ -2,14 +2,11 @@ import { supabase } from "./supabase.js";
 
 window.login = async function () {
 
-    const email = document
-        .getElementById("email")
-        .value
-        .trim();
+    const email =
+        document.getElementById("email").value.trim();
 
-    const password = document
-        .getElementById("password")
-        .value;
+    const password =
+        document.getElementById("password").value;
 
     if (!email || !password) {
 
@@ -19,23 +16,24 @@ window.login = async function () {
 
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } =
+        await supabase.auth.signInWithPassword({
 
-        email,
-        password
+            email,
+            password
 
-    });
+        });
 
     if (error) {
 
-        alert("❌ " + error.message);
+        alert(error.message);
 
         return;
 
     }
 
-    alert("✅ Login Successful");
+    alert("Login Successful");
 
-   window.location.href = "index.html";
+    window.location.href = "admin.html";
 
 };
