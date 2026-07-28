@@ -300,29 +300,49 @@ function loadCart() {
 
     cart.forEach(item => {
 
-        total += item.price * item.qty;
+    total += item.price * item.qty;
 
-        cartContainer.innerHTML += `
+    cartContainer.innerHTML += `
+        <div class="card mb-3 shadow-sm">
+            <div class="row g-0 align-items-center">
 
-<div class="cart-item">
+                <div class="col-md-3 text-center p-2">
+                    <img src="${item.image}"
+                         class="img-fluid rounded"
+                         style="max-height:120px; object-fit:cover;"
+                         alt="${item.name}">
+                </div>
 
-<h5>${item.name}</h5>
+                <div class="col-md-9">
+                    <div class="card-body">
 
-<p>Price : ₹${item.price}</p>
+                        <h5>${item.name}</h5>
 
-<p>Quantity : ${item.qty}</p>
+                        <p class="text-success fw-bold">
+                            ₹${item.price}
+                        </p>
 
-<button
-class="btn btn-danger btn-sm"
-onclick="removeFromCart(${item.id})">
+                        <p>
+                            Quantity : ${item.qty}
+                        </p>
 
-Remove
+                        <button
+                            class="btn btn-danger btn-sm"
+                            onclick="removeFromCart(${item.id})">
 
-</button>
+                            <i class="fa-solid fa-trash"></i>
+                            Remove
 
-</div>
+                        </button>
 
-`;
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `;
+
+});
 
     });
 
