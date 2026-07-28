@@ -4,7 +4,9 @@ import { supabase } from "./supabase.js";
 // GLOBAL VARIABLES
 // ==========================
 
-let allProducts = [];
+let products = [];
+
+let filteredProducts = [];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -16,19 +18,30 @@ let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
 async function loadProducts() {
 
+    const loading = document.getElementById("loading");
+
+    if (loading) {
+        loading.style.display = "block";
+    }
+
     const { data, error } = await supabase
         .from("products")
         .select("*")
-        .order("id", { ascending: false });
+        .order("created_at", { ascending: false });
+
+    if (loading) {
+        loading.style.display = "none";
+    }
 
     if (error) {
-        console.error("Supabase Error:", error);
+        console.error(error);
         return;
     }
 
-    allProducts = data || [];
+    products = data || [];
+    filteredProducts = [...products];
 
-    displayProducts(allProducts);
+    displayProducts(filteredProducts);
 
     updateCounts();
 }
@@ -37,81 +50,87 @@ async function loadProducts() {
 // DISPLAY PRODUCTS
 // ==========================
 
-function displayProducts(products) {
+function displayProducts(list) {
 
-    const container = document.getElementById("productContainer");
+    const container =
+        document.getElementById("productList");
 
     if (!container) return;
 
     container.innerHTML = "";
 
-    if (products.length === 0) {
+    const noProducts =
+        document.getElementById("noProducts");
 
-        container.innerHTML = `
-            <div class="col-12 text-center">
-                <h4>No Products Found</h4>
-            </div>
-        `;
+    if (list.length === 0) {
+
+        if (noProducts) {
+            noProducts.style.display = "block";
+        }
 
         return;
     }
 
-    products.forEach(product => {
+    if (noProducts) {
+        noProducts.style.display = "none";
+    }
+
+    list.forEach(product => {
 
         container.innerHTML += `
 
-        <div class="col-lg-3 col-md-6">
+<div class="col-md-4">
 
-            <div class="card shadow h-100">
+<div class="card product-card h-100">
 
-                <img src="${product.image}"
-                     class="card-img-top"
-                     style="height:220px;object-fit:cover;">
+<img
+src="${product.image}"
+class="card-img-top"
+alt="${product.name}">
 
-                <div class="card-body">
+<div class="card-body">
 
-                    <h5>${product.name}</h5>
+<h5>${product.name}</h5>
 
-                    <p class="text-success fw-bold">
-                        ₹${product.price}
-                    </p>
+<p>${product.description ?? ""}</p>
 
-                    <p>${product.description ?? ""}</p>
+<h4 class="price">
 
-                    <span class="badge bg-success mb-3">
-                        ${product.category}
-                    </span>
+₹${product.price}
 
-                    <button
-                        class="btn btn-success w-100 mb-2"
-                        onclick="addToCart(${product.id})">
+</h4>
 
-                        🛒 Add To Cart
+<div class="d-flex gap-2 mt-3">
 
-                    </button>
+<button
+class="btn btn-success w-100"
+onclick="addToCart(${product.id})">
 
-                    <button
-                        class="btn btn-outline-danger w-100"
-                        onclick="addToWishlist(${product.id})">
+🛒 Cart
 
-                        ❤️ Wishlist
+</button>
 
-                    </button>
+<button
+class="btn btn-outline-danger"
+onclick="addToWishlist(${product.id})">
 
-                </div>
+❤
 
-            </div>
+</button>
 
-        </div>
+</div>
 
-        `;
+</div>
+
+</div>
+
+</div>
+
+`;
+
     });
 
 }
-
-// ==========================
-// START
-// ==========================
 
 loadProducts();
 // ==========================
@@ -120,38 +139,42 @@ loadProducts();
 
 function searchProducts() {
 
-    const keyword = document
-        .getElementById("searchInput")
-        ?.value
-        .toLowerCase() || "";
+    const input =
+        document.getElementById("searchInput");
 
-    const filtered = allProducts.filter(product =>
+    if (!input) return;
+
+    const keyword =
+        input.value.toLowerCase();
+
+    filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(keyword)
     );
 
-    displayProducts(filtered);
+    filterProducts();
 }
 
 // ==========================
-// CATEGORY FILTER
+// FILTER PRODUCTS
 // ==========================
 
 function filterProducts() {
 
-    const category = document
-        .getElementById("categoryFilter")
-        ?.value;
+    const select =
+        document.getElementById("categoryFilter");
 
-    if (!category || category === "All Categories") {
-        displayProducts(allProducts);
-        return;
+    let list = [...filteredProducts];
+
+    if (select && select.value !== "All") {
+
+        list = list.filter(product =>
+            product.category === select.value
+        );
+
     }
 
-    const filtered = allProducts.filter(product =>
-        product.category === category
-    );
+    displayProducts(list);
 
-    displayProducts(filtered);
 }
 
 // ==========================
@@ -160,11 +183,13 @@ function filterProducts() {
 
 function addToCart(id) {
 
-    const product = allProducts.find(p => p.id === id);
+    const product =
+        products.find(p => p.id === id);
 
     if (!product) return;
 
-    const existing = cart.find(item => item.id === id);
+    const existing =
+        cart.find(item => item.id === id);
 
     if (existing) {
 
@@ -179,11 +204,15 @@ function addToCart(id) {
 
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
 
     updateCounts();
 
-    alert("🛒 Product added to cart!");
+    alert("🛒 Added to Cart!");
+
 }
 
 // ==========================
@@ -192,15 +221,18 @@ function addToCart(id) {
 
 function addToWishlist(id) {
 
-    const product = allProducts.find(p => p.id === id);
+    const product =
+        products.find(p => p.id === id);
 
     if (!product) return;
 
-    const exists = wishlist.find(item => item.id === id);
+    const exists =
+        wishlist.find(item => item.id === id);
 
     if (exists) {
 
-        alert("❤️ Already in wishlist");
+        alert("Already in Wishlist");
+
         return;
 
     }
@@ -214,7 +246,8 @@ function addToWishlist(id) {
 
     updateCounts();
 
-    alert("❤️ Added to wishlist!");
+    alert("❤️ Added to Wishlist");
+
 }
 
 // ==========================
@@ -222,104 +255,85 @@ function addToWishlist(id) {
 // ==========================
 
 document
-    .getElementById("searchInput")
-    ?.addEventListener("keyup", searchProducts);
+.getElementById("searchInput")
+?.addEventListener("keyup",
+searchProducts);
 
 document
-    .getElementById("categoryFilter")
-    ?.addEventListener("change", filterProducts);
+.getElementById("categoryFilter")
+?.addEventListener("change",
+filterProducts);
 
-// HTML onclick support
+// ==========================
+// EXPORT
+// ==========================
+
 window.addToCart = addToCart;
 window.addToWishlist = addToWishlist;
-window.searchProducts = searchProducts;
-window.filterProducts = filterProducts;
 // ==========================
-// LOAD CART PAGE
+// LOAD CART
 // ==========================
 
 function loadCart() {
 
-    const container = document.getElementById("cartContainer");
+    const cartContainer = document.getElementById("cartItems");
+    const totalElement = document.getElementById("cartTotal");
 
-    if (!container) return;
+    if (!cartContainer) return;
 
-    container.innerHTML = "";
+    cartContainer.innerHTML = "";
+
+    let total = 0;
 
     if (cart.length === 0) {
 
-        container.innerHTML = `
-            <div class="alert alert-warning">
+        cartContainer.innerHTML = `
+            <div class="alert alert-info">
                 Your cart is empty.
             </div>
         `;
+
+        if (totalElement) totalElement.textContent = "₹0";
+
         return;
     }
-
-    let total = 0;
 
     cart.forEach(item => {
 
         total += item.price * item.qty;
 
-        container.innerHTML += `
-        <div class="card mb-3">
+        cartContainer.innerHTML += `
 
-            <div class="card-body">
+<div class="cart-item">
 
-                <div class="row align-items-center">
+<h5>${item.name}</h5>
 
-                    <div class="col-md-2">
-                        <img src="${item.image}"
-                             class="img-fluid rounded">
-                    </div>
+<p>Price : ₹${item.price}</p>
 
-                    <div class="col-md-4">
-                        <h5>${item.name}</h5>
-                        <p>${item.category}</p>
-                    </div>
+<p>Quantity : ${item.qty}</p>
 
-                    <div class="col-md-2">
-                        Qty : ${item.qty}
-                    </div>
+<button
+class="btn btn-danger btn-sm"
+onclick="removeFromCart(${item.id})">
 
-                    <div class="col-md-2">
-                        ₹${item.price}
-                    </div>
+Remove
 
-                    <div class="col-md-2">
+</button>
 
-                        <button
-                            class="btn btn-danger btn-sm"
-                            onclick="removeFromCart(${item.id})">
+</div>
 
-                            Remove
+`;
 
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
     });
 
-    container.innerHTML += `
+    if (totalElement) {
+        totalElement.textContent = `₹${total}`;
+    }
 
-        <div class="text-end mt-4">
-
-            <h3>Total : ₹${total}</h3>
-
-        </div>
-
-    `;
 }
 
 // ==========================
-// REMOVE FROM CART
+// REMOVE CART ITEM
 // ==========================
 
 function removeFromCart(id) {
@@ -334,6 +348,7 @@ function removeFromCart(id) {
     updateCounts();
 
     loadCart();
+
 }
 
 // ==========================
@@ -342,15 +357,16 @@ function removeFromCart(id) {
 
 function loadWishlist() {
 
-    const container = document.getElementById("wishlistContainer");
+    const wishlistContainer =
+        document.getElementById("wishlistItems");
 
-    if (!container) return;
+    if (!wishlistContainer) return;
 
-    container.innerHTML = "";
+    wishlistContainer.innerHTML = "";
 
     if (wishlist.length === 0) {
 
-        container.innerHTML = `
+        wishlistContainer.innerHTML = `
             <div class="alert alert-warning">
                 Wishlist is empty.
             </div>
@@ -361,62 +377,39 @@ function loadWishlist() {
 
     wishlist.forEach(item => {
 
-        container.innerHTML += `
+        wishlistContainer.innerHTML += `
 
-        <div class="card mb-3">
+<div class="cart-item">
 
-            <div class="card-body">
+<h5>${item.name}</h5>
 
-                <div class="row align-items-center">
+<p>Price : ₹${item.price}</p>
 
-                    <div class="col-md-2">
+<button
+class="btn btn-danger btn-sm"
+onclick="removeWishlist(${item.id})">
 
-                        <img src="${item.image}"
-                             class="img-fluid rounded">
+Remove
 
-                    </div>
+</button>
 
-                    <div class="col-md-4">
+</div>
 
-                        <h5>${item.name}</h5>
+`;
 
-                    </div>
-
-                    <div class="col-md-2">
-
-                        ₹${item.price}
-
-                    </div>
-
-                    <div class="col-md-4">
-
-                        <button
-                            class="btn btn-danger btn-sm"
-                            onclick="removeWishlist(${item.id})">
-
-                            Remove
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        `;
     });
+
 }
 
 // ==========================
-// REMOVE FROM WISHLIST
+// REMOVE WISHLIST ITEM
 // ==========================
 
 function removeWishlist(id) {
 
-    wishlist = wishlist.filter(item => item.id !== id);
+    wishlist = wishlist.filter(
+        item => item.id !== id
+    );
 
     localStorage.setItem(
         "wishlist",
@@ -426,12 +419,20 @@ function removeWishlist(id) {
     updateCounts();
 
     loadWishlist();
+
 }
+
+// ==========================
+// EXPORT
+// ==========================
 
 window.removeFromCart = removeFromCart;
 window.removeWishlist = removeWishlist;
 
-// Load pages automatically
+// ==========================
+// INITIAL LOAD
+// ==========================
+
 loadCart();
 loadWishlist();
 // ==========================
@@ -453,6 +454,7 @@ function updateCounts() {
     if (wishlistCount) {
         wishlistCount.textContent = wishlist.length;
     }
+
 }
 
 // ==========================
@@ -461,19 +463,23 @@ function updateCounts() {
 
 function clearCart() {
 
-    if (!confirm("Clear all items from cart?")) {
+    if (!confirm("Are you sure you want to clear the cart?")) {
         return;
     }
 
     cart = [];
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
 
     updateCounts();
 
     loadCart();
 
     alert("🗑️ Cart cleared successfully!");
+
 }
 
 // ==========================
@@ -483,11 +489,14 @@ function clearCart() {
 function checkout() {
 
     if (cart.length === 0) {
+
         alert("Your cart is empty.");
+
         return;
+
     }
 
-    let total = cart.reduce(
+    const total = cart.reduce(
         (sum, item) => sum + (item.price * item.qty),
         0
     );
@@ -498,15 +507,19 @@ function checkout() {
 
     cart = [];
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
 
     updateCounts();
 
     loadCart();
+
 }
 
 // ==========================
-// GLOBAL FUNCTIONS
+// EXPORT
 // ==========================
 
 window.clearCart = clearCart;
@@ -517,5 +530,7 @@ window.checkout = checkout;
 // ==========================
 
 updateCounts();
+
 loadCart();
+
 loadWishlist();
