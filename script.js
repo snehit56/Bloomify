@@ -322,9 +322,23 @@ function loadCart() {
                             ₹${item.price}
                         </p>
 
-                        <p>
-                            Quantity : ${item.qty}
-                        </p>
+                        <div class="d-flex align-items-center gap-2">
+
+    <button
+        class="btn btn-outline-secondary btn-sm"
+        onclick="decreaseQty(${item.id})">
+        −
+    </button>
+
+    <strong>${item.qty}</strong>
+
+    <button
+        class="btn btn-outline-success btn-sm"
+        onclick="increaseQty(${item.id})">
+        +
+    </button>
+
+</div>
 
                         <button
                             class="btn btn-danger btn-sm"
@@ -368,7 +382,34 @@ function removeFromCart(id) {
     updateCounts();
 
     loadCart();
+function increaseQty(id) {
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
 
+    item.qty++;
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCounts();
+    loadCart();
+}
+
+function decreaseQty(id) {
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
+
+    item.qty--;
+
+    if (item.qty <= 0) {
+        cart = cart.filter(p => p.id !== id);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCounts();
+    loadCart();
+}
+
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
 }
 
 // ==========================
@@ -554,3 +595,33 @@ updateCounts();
 loadCart();
 
 loadWishlist();
+function increaseQty(id) {
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
+
+    item.qty++;
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCounts();
+    loadCart();
+}
+
+function decreaseQty(id) {
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
+
+    item.qty--;
+
+    if (item.qty <= 0) {
+        cart = cart.filter(p => p.id !== id);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCounts();
+    loadCart();
+}
+
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
